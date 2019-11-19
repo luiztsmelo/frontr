@@ -16,7 +16,7 @@ export default function HackerNews() {
 
 		setState({
 			loading: false,
-			techNews: res.data.articles.slice(0, 5),
+			techNews: res.data.articles.slice(0, 3),
 		});
 	};
 
@@ -44,7 +44,7 @@ export default function HackerNews() {
 
 const Articles = styled.div`
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 22px;
 `;
 
@@ -64,7 +64,7 @@ const Article = styled.a`
 `;
 
 const Image = styled.img`
-	height: 120px;
+	height: 160px;
 	object-fit: cover;
 	width: 100%;
 	background-color: #272727;
@@ -84,18 +84,16 @@ const EmptyImage = styled.div`
 `;
 
 const Description = styled.div`
-	padding: 16px;
+	padding: 17px;
 `;
 
 const Date = styled.p`
-	font-size: 13px;
+	font-size: 12px;
+	text-transform: uppercase;
 	font-weight: 600;
 	color: #f00;
 	margin: 0;
-	padding-bottom: 8px;
-	::first-letter {
-		text-transform: uppercase;
-	}
+	padding-bottom: 9px;
 `;
 
 const Title = styled.p`

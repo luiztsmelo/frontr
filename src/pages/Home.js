@@ -16,6 +16,8 @@ export default function Home() {
 			<SectionTitle>Hacker News</SectionTitle>
 			<HackerNews />
 
+			<SectionTitle>Design Inspiration</SectionTitle>
+
 			<Footer />
 		</Page>
 	);
@@ -26,11 +28,14 @@ const Page = styled.div`
 	flex-flow: column;
 	align-items: center;
 	padding: 0 10%;
-	background-color: rgb(242, 242, 242);
+	background-color: #fff;
 	color: ${(props) => props.theme.darkColor};
 `;
 
 const SectionTitle = styled.h2`
-	font-size: 36px;
+	font-size: 30px;
 	padding: 100px 0 15px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	word-spacing: 2px;
 `;
