@@ -29,7 +29,7 @@ export default function HackerNews() {
 	return (
 		<Articles>
 			{state.techNews.map((article) => (
-				<Article href={article.url} target="__blank" key={article.title}>
+				<Article href={article.url} target="__blank" key={article.url}>
 					{article.urlToImage !== null ? <Image src={article.urlToImage} alt={article.title} /> : <EmptyImage />}
 
 					<Description>
