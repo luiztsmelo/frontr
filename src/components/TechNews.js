@@ -51,7 +51,6 @@ const Articles = styled.div`
 const Article = styled.a`
 	display: flex;
 	flex-flow: column;
-	align-items: center;
 	border-radius: 14px;
 	overflow: hidden;
 	background-color: #fff;
@@ -77,9 +76,9 @@ const Image = styled.img`
 `;
 
 const EmptyImage = styled.div`
-	height: 120px;
+	height: 160px;
 	width: 100%;
-	background-color: #2a2a2a;
+	background-color: #3e3e3e;
 	border-radius: 14px 14px 0 0;
 `;
 

@@ -8,6 +8,8 @@ import Footer from '../components/Footer';
 export default function Home() {
 	return (
 		<Page>
+			<Logo>frontr</Logo>
+
 			<Weather />
 
 			<SectionTitle>Tech News</SectionTitle>
@@ -30,6 +32,13 @@ const Page = styled.div`
 	padding: 0 10%;
 	background-color: #fff;
 	color: ${(props) => props.theme.darkColor};
+`;
+
+const Logo = styled.span`
+	font-family: 'Righteous', sans-serif;
+	font-size: 27px;
+	margin: 18px 0;
+	color: #f00;
 `;
 
 const SectionTitle = styled.h2`

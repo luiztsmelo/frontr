@@ -10,7 +10,7 @@ function App() {
 		<Router>
 			<Helmet>
 				<link
-					href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap"
+					href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700|Righteous&display=swap"
 					rel="stylesheet"
 				/>
 			</Helmet>

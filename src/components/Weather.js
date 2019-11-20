@@ -8,25 +8,37 @@ require('../assets/odometer.css');
 
 export default function Weather() {
 	const [state, setState] = useState({
-		loading: {
-			weather: true,
-			forecast: true,
-		},
+		loading: true,
 		weather: null,
-		forecast: [],
 	});
 
 	const getWeather = async (position) => {
 		try {
-			const res = await axios.get(
-				`http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=a2c6c029f820764dd2869be3684a65ab`,
+			const promises = [];
+
+			promises.push(
+				axios.get(
+					`http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=a2c6c029f820764dd2869be3684a65ab`,
+				),
 			);
 
+			promises.push(
+				axios.get(
+					`http://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=a2c6c029f820764dd2869be3684a65ab`,
+				),
+			);
+
+			const results = await axios.all(promises);
+
+			const weatherNextHours = [];
+
+			weatherNextHours.push(results[0].data);
+
+			results[1].data.list.slice(0, 4).forEach((res) => weatherNextHours.push(res));
+
 			setState({
-				weather: res.data,
-				loading: {
-					weather: false,
-				},
+				weather: weatherNextHours,
+				loading: false,
 			});
 		} catch (error) {
 			console.error(error);
@@ -35,7 +47,7 @@ export default function Weather() {
 
 	const weatherIcon = () => {
 		if (state.weather !== null) {
-			switch (state.weather.weather[0].icon) {
+			switch (state.weather[0].weather[0].icon) {
 				case '01d':
 					return <WiDaySunny />;
 				case '01n':
@@ -72,7 +84,7 @@ export default function Weather() {
 		<StyledWeather>
 			<Temperature>
 				{weatherIcon()}
-				<Odometer value={state.weather === null ? 0 : Math.round(state.weather.main.temp)} />º
+				<Odometer value={state.weather === null ? 0 : Math.round(state.weather[0].main.temp)} />º
 			</Temperature>
 		</StyledWeather>
 	);
@@ -82,12 +94,12 @@ const StyledWeather = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 40px 0 10px;
+	padding: 30px 0 10px;
 `;
 
 const Temperature = styled.div`
 	display: flex;
 	align-items: center;
-	font-size: 52px;
+	font-size: 49px;
 	font-weight: 700;
 `;

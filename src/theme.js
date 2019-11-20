@@ -1,5 +1,5 @@
 const theme = {
-	darkColor: '#2a2a2a',
+	darkColor: '#3e3e3e',
 };
 
 export default theme;
