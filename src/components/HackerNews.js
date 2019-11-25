@@ -49,30 +49,29 @@ export default function HackerNews() {
 const Articles = styled.div`
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: repeat(2, 106px);
-	grid-gap: 22px;
+	grid-auto-rows: auto;
+	grid-gap: 15px;
 	width: 100%;
 `;
 
 const Article = styled.a`
 	display: grid;
 	grid-template-columns: auto 1fr;
-	grid-gap: 15px;
+	grid-gap: 16px;
 	align-items: center;
 	border-radius: 14px;
 	background-color: #fff;
 	text-decoration: none;
-	box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
+	padding: 15px;
 	transition: all ease 0.25s;
-	padding: 16px;
 	:hover {
-		box-shadow: 2px 2px 25px rgba(0, 0, 0, 0.5);
+		box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 	}
 `;
 
 const Number = styled.span`
-	font-size: 32px;
-	font-weight: 600;
+	font-size: 28px;
+	font-weight: 500;
 	color: #f00;
 `;
 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { WiDaySunny, WiNightClear, WiDayCloudy, WiCloud, WiNightRain } from 'react-icons/wi';
 import Odometer from 'react-odometerjs';
+import { fromUnixTime, lightFormat } from 'date-fns';
 
 require('../assets/odometer.css');
 
@@ -10,9 +11,10 @@ export default function Weather() {
 	const [state, setState] = useState({
 		loading: true,
 		weather: null,
+		forecast: [],
 	});
 
-	const getWeather = async (position) => {
+	const getWeatherAndForecast = async (position) => {
 		try {
 			const promises = [];
 
@@ -30,14 +32,9 @@ export default function Weather() {
 
 			const results = await axios.all(promises);
 
-			const weatherNextHours = [];
-
-			weatherNextHours.push(results[0].data);
-
-			results[1].data.list.slice(0, 4).forEach((res) => weatherNextHours.push(res));
-
 			setState({
-				weather: weatherNextHours,
+				weather: results[0].data,
+				forecast: results[1].data.list.slice(0, 9),
 				loading: false,
 			});
 		} catch (error) {
@@ -45,9 +42,9 @@ export default function Weather() {
 		}
 	};
 
-	const weatherIcon = () => {
-		if (state.weather !== null) {
-			switch (state.weather[0].weather[0].icon) {
+	const weatherIcon = (icon) => {
+		if (!state.loading) {
+			switch (icon) {
 				case '01d':
 					return <WiDaySunny />;
 				case '01n':
@@ -61,31 +58,37 @@ export default function Weather() {
 				default:
 					return <WiDaySunny />;
 			}
-		} else {
-			return <WiDaySunny />;
 		}
 	};
 
 	useEffect(() => {
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(getWeather);
+			navigator.geolocation.getCurrentPosition(getWeatherAndForecast);
 		} else {
 			console.log('Geolocation is not supported by this browser.');
 		}
 	}, []);
 
-	useEffect(() => {
-		weatherIcon();
-	}, [state.weather]);
-
 	console.log('weather', state.weather);
+	console.log('forecast', state.forecast);
 
 	return (
 		<StyledWeather>
-			<Temperature>
-				{weatherIcon()}
-				<Odometer value={state.weather === null ? 0 : Math.round(state.weather[0].main.temp)} />º
-			</Temperature>
+			<div className="current-weather">
+				{state.weather === null ? <WiDaySunny /> : weatherIcon(state.weather.weather[0].icon)}
+				<Odometer value={state.weather === null ? 0 : Math.round(state.weather.main.temp)} />º
+			</div>
+			<div className="forecast-cards">
+				{state.forecast.map((cast) => (
+					<div className="card">
+						<span className="__hour">{lightFormat(fromUnixTime(cast.dt), 'HH')}h</span>
+						<div className="__icon">
+							{state.forecast.length === 0 ? <WiDaySunny /> : weatherIcon(cast.weather[0].icon)}
+						</div>
+						<span className="__temp">{Math.round(cast.main.temp)}º</span>
+					</div>
+				))}
+			</div>
 		</StyledWeather>
 	);
 }
@@ -94,12 +97,39 @@ const StyledWeather = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 30px 0 10px;
-`;
+	width: 100%;
 
-const Temperature = styled.div`
-	display: flex;
-	align-items: center;
-	font-size: 49px;
-	font-weight: 700;
+	.current-weather {
+		display: flex;
+		align-items: center;
+		font-size: 47px;
+		font-weight: 700;
+		padding: 30px 0 50px;
+	}
+
+	.forecast-cards {
+		display: grid;
+		grid-template-columns: repeat(9, 1fr);
+		grid-gap: 25px;
+		width: 100%;
+		.card {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 10px;
+			.__icon {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				padding: 3px 0;
+				font-size: 33px;
+			}
+			.__temp {
+				font-size: 20px;
+				font-weight: 600;
+			}
+		}
+	}
 `;

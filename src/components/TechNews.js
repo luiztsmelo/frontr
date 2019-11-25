@@ -16,7 +16,7 @@ export default function HackerNews() {
 
 		setState({
 			loading: false,
-			techNews: res.data.articles.slice(0, 3),
+			techNews: res.data.articles.filter((article) => article.urlToImage !== null).slice(0, 3),
 		});
 	};
 
@@ -30,7 +30,7 @@ export default function HackerNews() {
 		<Articles>
 			{state.techNews.map((article) => (
 				<Article href={article.url} target="__blank" key={article.url}>
-					{article.urlToImage !== null ? <Image src={article.urlToImage} alt={article.title} /> : <EmptyImage />}
+					<Image src={article.urlToImage} alt={article.title} />
 
 					<Description>
 						<Date>{formatDistanceToNow(parseISO(article.publishedAt), { addSuffix: true })}</Date>
@@ -45,7 +45,7 @@ export default function HackerNews() {
 const Articles = styled.div`
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 22px;
+	grid-gap: 25px;
 `;
 
 const Article = styled.a`
@@ -55,19 +55,14 @@ const Article = styled.a`
 	overflow: hidden;
 	background-color: #fff;
 	text-decoration: none;
-	box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
-	transition: all ease 0.25s;
-	&:hover {
-		box-shadow: 2px 2px 25px rgba(0, 0, 0, 0.5);
-	}
 `;
 
 const Image = styled.img`
-	height: 160px;
+	height: 180px;
 	object-fit: cover;
 	width: 100%;
 	background-color: #272727;
-	border-radius: 14px 14px 0 0;
+	border-radius: 14px;
 	filter: grayscale(100%);
 	transition: all ease 0.25s;
 	${Article}:hover & {
@@ -75,16 +70,7 @@ const Image = styled.img`
 	}
 `;
 
-const EmptyImage = styled.div`
-	height: 160px;
-	width: 100%;
-	background-color: #3e3e3e;
-	border-radius: 14px 14px 0 0;
-`;
-
-const Description = styled.div`
-	padding: 17px;
-`;
+const Description = styled.div``;
 
 const Date = styled.p`
 	font-size: 12px;
@@ -92,7 +78,7 @@ const Date = styled.p`
 	font-weight: 600;
 	color: #f00;
 	margin: 0;
-	padding-bottom: 9px;
+	padding: 17px 0 9px;
 `;
 
 const Title = styled.p`
