@@ -9,7 +9,7 @@ export default function GithubTrending() {
 		repositories: [],
 	});
 
-	const getRepositories = async () => {
+	const fetchRepositories = async () => {
 		const res = await axios.get('https://github-trending-api.now.sh/repositories?language=JavaScript&since=daily');
 
 		setState({
@@ -19,7 +19,7 @@ export default function GithubTrending() {
 	};
 
 	useEffect(() => {
-		getRepositories();
+		fetchRepositories();
 	}, []);
 
 	console.log('repositories', state.repositories);

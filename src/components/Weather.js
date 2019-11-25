@@ -14,7 +14,7 @@ export default function Weather() {
 		forecast: [],
 	});
 
-	const getWeatherAndForecast = async (position) => {
+	const fetchWeatherAndForecast = async (position) => {
 		try {
 			const promises = [];
 
@@ -63,7 +63,7 @@ export default function Weather() {
 
 	useEffect(() => {
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(getWeatherAndForecast);
+			navigator.geolocation.getCurrentPosition(fetchWeatherAndForecast);
 		} else {
 			console.log('Geolocation is not supported by this browser.');
 		}

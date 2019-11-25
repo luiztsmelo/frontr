@@ -8,7 +8,7 @@ export default function HackerNews() {
 		hackerNews: [],
 	});
 
-	const getHackerNews = async () => {
+	const fetchHackerNews = async () => {
 		const topItems = await axios.get('https://hacker-news.firebaseio.com/v0/topstories.json');
 
 		const promises = [];
@@ -29,7 +29,7 @@ export default function HackerNews() {
 	};
 
 	useEffect(() => {
-		getHackerNews();
+		fetchHackerNews();
 	}, []);
 
 	console.log('hackerNews', state.hackerNews);

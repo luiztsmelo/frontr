@@ -22,8 +22,6 @@ export default function Home() {
 			<SectionTitle>JS Github Trending</SectionTitle>
 			<GithubTrending />
 
-			<SectionTitle>Design Inspiration</SectionTitle>
-
 			<Footer />
 		</Page>
 	);

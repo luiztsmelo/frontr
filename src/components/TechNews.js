@@ -9,7 +9,7 @@ export default function HackerNews() {
 		techNews: [],
 	});
 
-	const getTechNews = async () => {
+	const fetchTechNews = async () => {
 		const res = await axios.get(
 			'https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=7e0522cfa4e84bc0b60fa35fd9ef2edd',
 		);
@@ -21,7 +21,7 @@ export default function HackerNews() {
 	};
 
 	useEffect(() => {
-		getTechNews();
+		fetchTechNews();
 	}, []);
 
 	console.log('techNews', state.techNews);
