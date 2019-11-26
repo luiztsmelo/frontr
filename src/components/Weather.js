@@ -20,13 +20,13 @@ export default function Weather() {
 
 			promises.push(
 				axios.get(
-					`http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=a2c6c029f820764dd2869be3684a65ab`,
+					`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=a2c6c029f820764dd2869be3684a65ab`,
 				),
 			);
 
 			promises.push(
 				axios.get(
-					`http://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=a2c6c029f820764dd2869be3684a65ab`,
+					`https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=a2c6c029f820764dd2869be3684a65ab`,
 				),
 			);
 
